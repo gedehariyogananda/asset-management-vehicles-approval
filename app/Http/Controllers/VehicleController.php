@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\VehicleUserExport;
 use App\Models\UserVehicle;
 use App\Models\Vehicle;
 use App\Models\VehicleName;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VehicleController extends Controller
 {
@@ -152,5 +154,10 @@ class VehicleController extends Controller
         ]);
 
         return back()->with('success', 'Vehicle borrowed successfully, please wait for approval. u can see details in history page');
+    }
+
+    public function exportVehiclesUser()
+    {
+        return Excel::download(new VehicleUserExport, 'vehicles_user.xlsx');
     }
 }
