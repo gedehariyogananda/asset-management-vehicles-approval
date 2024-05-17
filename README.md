@@ -136,6 +136,12 @@ so in this case, next step in superior
 ![image](https://github.com/gedehariyogananda/repo-sekawan-media-task/assets/123063394/0c4d6bb3-1c40-47fb-ba53-5d26850718dc)
 
 
+### the DBMS
+![image](https://github.com/gedehariyogananda/repo-sekawan-media-task/assets/123063394/1afbccf4-13ea-4540-bb33-5e9a52008965)
+
+### the activity diagram 
+![activity diagram (1)](https://github.com/gedehariyogananda/repo-sekawan-media-task/assets/123063394/610e06ed-2ea9-4d70-b4f9-b625488f1532)
+
 
 ### credit 
 the template admin : https://github.com/aleckrh/laravel-sb-admin-2
