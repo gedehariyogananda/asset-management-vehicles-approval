@@ -43,5 +43,5 @@ Route::middleware('auth')->group(function () {
             Route::patch('/{id}', 'updateApproval')->name('update');
         });
 
-    Route::get('/approval/superior/{id}', [ApprovalController::class, 'updateApprovalSuperior'])->name('superior.update');
+    Route::patch('/approval/superior/{id}', [ApprovalController::class, 'updateApprovalSuperior'])->name('superior.update');
 });

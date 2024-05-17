@@ -35,7 +35,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Vehicles Data</h6>
                     @can('admin')
                     <a class="btn btn-smm btn-success" href="{{ route('vehicles.export') }}"><i class="fa fa-check"></i>
-                         Export Data All Approval User</a>
+                        Export Data All Approval User</a>
                     @endcan
                 </div>
 

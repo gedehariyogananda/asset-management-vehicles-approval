@@ -31,8 +31,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($userVehicles as $data)
                             <tr>
-                                @foreach($userVehicles as $data)
+
                                 <td>{{ $data->karyawan->name }}</td>
                                 <td>{{ $data->superior->name }}</td>
                                 <td>{{ $data->start_date }}</td>

@@ -24,12 +24,11 @@ class ApprovalController extends Controller
     {
         $request->validate([
             'superior_id' => 'required',
-            'status' => 'required',
         ]);
 
         UserVehicle::where('id', $id)->update([
             'superior_id' => $request->superior_id,
-            'status' => $request->status,
+            'status' => $request->status ? $request->status : 'pending',
             'driver_id' => $request->driver_id
         ]);
 

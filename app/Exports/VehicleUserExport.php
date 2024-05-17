@@ -25,14 +25,14 @@ class VehicleUserExport implements FromCollection, WithHeadings, ShouldAutoSize
         $this->data = $userVehicles->map(function ($datasUser) {
             return [
                 'Nama Karyawan' => $datasUser->karyawan->name,
-                'Nama Atasan' => $datasUser->superior->name,
+                'Nama Atasan' => $datasUser->superior ? $datasUser->superior->name : '',
                 'Nama Kendaraan' => $datasUser->vehicle->vehicleName->name_vehicle,
                 'Plat Nomor' => $datasUser->vehicle->license_plate,
                 'Mulai' => $datasUser->start_date,
                 'Selesai' => $datasUser->end_date,
                 'Status' => $datasUser->status,
                 'Catatan' => $datasUser->notes,
-                'Driver' => $datasUser->driver->name_driver,
+                'Driver' => $datasUser->driver ? $datasUser->driver->name : '',
             ];
         });
     }
