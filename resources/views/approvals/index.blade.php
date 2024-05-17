@@ -82,9 +82,9 @@
                                 </td>
                                 <td>
 
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                                         data-target="#approvalModal{{ $data->id }}">
-                                        Update
+                                        <i class="fa fa-history"></i>
                                     </button>
 
 

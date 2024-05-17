@@ -1,62 +1,46 @@
 <?php
 
-use Illuminate\Routing\Router;
+use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/profile', 'ProfileController@index')->name('profile');
-Route::put('/profile', 'ProfileController@update')->name('profile.update');
-
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+Route::controller(ProfileController::class)->prefix('profile')->group(function () {
+    Route::get('/', 'index')->name('profile');
+    Route::put('/', 'update')->name('profile.update');
+});
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/vehicles', 'VehicleController@index')->name('vehicles.index');
+    Route::controller(VehicleController::class)
+        ->prefix('vehicles')
+        ->name('vehicles.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/name', 'store')->name('store');
+            Route::post('/', 'storeVehicle')->name('storeVehicle');
+            Route::get('/show/{id}', 'show')->name('show');
+            Route::patch('/names{id}', 'update')->name('update');
+            Route::patch('/{id}', 'updateVehicle')->name('updateVehicle');
+            Route::delete('/{id}/name', 'destroy')->name('destroy');
+            Route::delete('/{id}', 'destroyVehicle')->name('destroyVehicle');
+            Route::post('user/borrow/{id}', 'borrow')->name('borrow');
+            Route::get('/history/{id}', 'history')->name('history');
+        });
 
-    // admin post vehicles name
-    Route::post('/name-vehicles', 'VehicleController@store')->name('vehicles.store');
+    Route::controller(ApprovalController::class)
+        ->prefix('approval')
+        ->name('approval.')
+        ->group(function () {
+            Route::get('/all', 'index')->name('index');
+            Route::patch('/{id}', 'updateApproval')->name('update');
+        });
 
-    // admin post vehicle
-    Route::post('/vehicles', 'VehicleController@storeVehicle')->name('vehicles.storeVehicle');
-
-    Route::get('/vehicles/show/{id}', 'VehicleController@show')->name('vehicles.show');
-
-    // update name vehicles
-    Route::patch('/name-vehicles/{id}', 'VehicleController@update')->name('vehicles.update');
-
-    // update vehicle
-    Route::patch('/vehicles/{id}', 'VehicleController@updateVehicle')->name('vehicles.updateVehicle');
-
-    // delete name vehicles
-    Route::delete('/name-vehicles/{id}', 'VehicleController@destroy')->name('vehicles.destroy');
-
-    // delete vehicle
-    Route::delete('/vehicles/{id}', 'VehicleController@destroyVehicle')->name('vehicles.destroyVehicle');
-
-    Route::post('vehicles/user/borrow/{id}', 'VehicleController@borrow')->name('vehicles.borrow');
-    Route::get('/vehicles/history/{id}', 'VehicleController@history')->name('vehicles.history');
-
-
-    Route::get('/approval/all', 'ApprovalController@index')->name('approval.index');
-    Route::patch('/approval/{id}', 'ApprovalController@updateApproval')->name('approval.update');
-
-    Route::patch('/approval/superior/{id}', 'ApprovalController@updateApprovalSuperior')->name('superior.update');
+    Route::get('/approval/superior/{id}', [ApprovalController::class, 'updateApprovalSuperior'])->name('superior.update');
 });

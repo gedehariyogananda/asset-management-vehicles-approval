@@ -1,28 +1,10 @@
 @extends('layouts.admin')
+@section('title', 'Page All Vehicle')
 
 @section('main-content')
 
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">{{ __('Vehicles') }}</h1>
-
-@if (session('success'))
-<div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-    {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
-
-@if ($errors->any())
-<div class="alert alert-danger border-left-danger" role="alert">
-    <ul class="pl-4 my-2">
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
 
 <div class="row">
 
@@ -123,13 +105,13 @@
                                 <td>{{ $data->bbm_vehicle }} km/l</td>
                                 <td>{{ $data->vehicles->count() }}</td>
                                 <td>
-                                    <a href="{{ route('vehicles.show', $data->id) }}" class="btn btn-info btn-sm">See
-                                        All</a>
+                                    <a href="{{ route('vehicles.show', $data->id) }}" class="btn btn-info btn-sm"><i
+                                            class="fa fa-eye"></i></a>
                                     @can('admin')
 
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                         data-target="#editVehicleModal{{ $data->id }}">
-                                        Edit
+                                        <i class="fa fa-edit"></i>
                                     </button>
 
                                     {{-- modal edit --}}
@@ -198,12 +180,13 @@
                                         </div>
                                     </div>
 
-                                    <form action="{{ route('vehicles.destroy', $data->id) }}" method="POST"
+                                    <form id="deleteForm{{ $data->id }}"
+                                        action="{{ route('vehicles.destroy', $data->id) }}" method="POST"
                                         style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                        <button type="button" class="btn btn-danger btn-sm deleteButton"
+                                            data-id="{{ $data->id }}"><i class="fa fa-trash"></i></button>
                                     </form>
                                     @endcan
                                 </td>
@@ -219,5 +202,39 @@
     </div>
 
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+            searching: true, 
+            paging: true 
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('.deleteButton').click(function () {
+            var id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#deleteForm'+id).submit();
+                }
+            });
+        });
+    });
+</script>
+
+
 
 @endsection
