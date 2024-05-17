@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', 'Statistic Borrow Vehicle')
 
 @section('main-content')
 
@@ -27,36 +28,117 @@
                 <h6 class="m-0 font-weight-bold text-primary">Borrow Vehicle Chart</h6>
             </div>
             <div class="card-body">
-                <canvas id="borrowVehicleChart" width="400" height="200"></canvas>
+                <div id="borrowVehicleChart"></div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Borrow Vehicle Per Month</h6>
+            </div>
+            <div class="card-body">
+                <div id="borrowVehicleMonthChart"></div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var ctx = document.getElementById('borrowVehicleChart').getContext('2d');
-        var borrowVehicleChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($vehicleNames) !!},
-                datasets: [{
-                    label: 'Vehicle Borrow Count',
-                    data: {!! json_encode($borrowCounts) !!},
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
+        var optionsVehicle = {
+            series: [{
+                name: 'Vehicle Borrow Count',
+                data: {!! json_encode($borrowCounts) !!}
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: {!! json_encode($vehicleNames) !!}
+            },
+            yaxis: {
+                title: {
+                    text: 'Count'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " times"
                     }
                 }
             }
-        });
+        };
+
+        var chartVehicle = new ApexCharts(document.querySelector("#borrowVehicleChart"), optionsVehicle);
+        chartVehicle.render();
+
+        // Borrow Vehicle Chart by Month
+        var optionsMonth = {
+            series: [{
+                name: 'User Borrow Count',
+                data: {!! json_encode($dataUserBorrowMonth) !!}
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yaxis: {
+                title: {
+                    text: 'Count'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " times"
+                    }
+                }
+            }
+        };
+
+        var chartMonth = new ApexCharts(document.querySelector("#borrowVehicleMonthChart"), optionsMonth);
+        chartMonth.render();
     });
 </script>
 

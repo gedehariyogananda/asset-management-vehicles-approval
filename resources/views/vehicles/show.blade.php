@@ -1,28 +1,11 @@
 @extends('layouts.admin')
+@section('title', 'Page All Vehicle Init')
 
 @section('main-content')
 
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">{{ __('Data Vehicles') }}</h1>
 
-@if (session('success'))
-<div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-    {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
-
-@if ($errors->any())
-<div class="alert alert-danger border-left-danger" role="alert">
-    <ul class="pl-4 my-2">
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
 
 <div class="row">
 
@@ -35,7 +18,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Vehicles Data</h6>
                     @can('admin')
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createModal">
-                        Add Vehicle
+                        <i class="fa fa-plus"></i> Add Vehicles Data 
                     </button>
                     @endcan
                     <!-- Create Modal -->
@@ -118,12 +101,12 @@
 
                                 <td>
                                     @can('admin', 'superior')
-                                    <a href="{{ route('vehicles.history', $data->id) }}"
-                                        class="btn btn-info btn-sm">History All Borrow</a>
+                                    <a href="{{ route('vehicles.history', $data->id) }}" class="btn btn-info btn-sm"><i
+                                            class="fa fa-history"></i></a>
 
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                         data-target="#updateModal{{ $data->id }}">
-                                        Update
+                                        <i class="fa fa-edit"></i>
                                     </button>
                                     <!-- Update Modal -->
                                     <div class="modal fade" id="updateModal{{ $data->id }}" tabindex="-1" role="dialog"
@@ -182,12 +165,14 @@
 
 
 
-                                    <form class="d-inline" action="{{ route('vehicles.destroyVehicle', $data->id) }}"
-                                        method="POST">
+                                    <form id="deleteFormVehicles{{ $data->id }}" class="d-inline"
+                                        action="{{ route('vehicles.destroyVehicle', $data->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button onclick="return confirm('Are you sure?')" type="submit"
-                                            class="btn btn-danger btn-sm">Delete</button>
+                                        <button type="button" class="btn btn-danger btn-sm deleteButtonVehicles"
+                                            data-id="{{ $data->id }}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </form>
                                     @endcan
                                     @can('pegawai')
@@ -255,5 +240,27 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('.deleteButtonVehicles').click(function () {
+            var id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#deleteFormVehicles'+id).submit();
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

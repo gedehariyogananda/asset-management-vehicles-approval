@@ -17,17 +17,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => "Guary",
-            'email' => "guary@gmail.com",
-            'password' => bcrypt('password'),
+            'name' => "admin1",
+            'email' => "admin@gmail.com",
+            'password' => "$2y$10$8P2sLWqZf/qfWEoFKOhENugQSpwFxurctvBxCOqAAlkHx0iDwUuHC",
             'role' => 'admin',
             'position' => 'IT Admin'
         ]);
 
         User::create([
-            'name' => "Pegawai",
+            'name' => "Pegawai1",
             'email' => "pegawai@gmail.com",
-            'password' => bcrypt('password'),
+            'password' => "$2y$10$8P2sLWqZf/qfWEoFKOhENugQSpwFxurctvBxCOqAAlkHx0iDwUuHC",
             'role' => 'pegawai',
             'position' => 'Marketing'
         ]);
@@ -35,15 +35,23 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => "Pegawai2",
             'email' => "pegawai2@gmail.com",
-            'password' => bcrypt('password'),
+            'password' => "$2y$10$8P2sLWqZf/qfWEoFKOhENugQSpwFxurctvBxCOqAAlkHx0iDwUuHC",
             'role' => 'pegawai',
             'position' => 'Sales'
         ]);
 
         User::create([
-            'name' => "Superior",
+            'name' => "Superior1",
             'email' => "superior@gmail.com",
-            'password' => bcrypt('password'),
+            'password' => "$2y$10$8P2sLWqZf/qfWEoFKOhENugQSpwFxurctvBxCOqAAlkHx0iDwUuHC",
+            'role' => 'superior',
+            'position' => 'Manager'
+        ]);
+
+        User::create([
+            'name' => "Superior2",
+            'email' => "superior2@gmail.com",
+            'password' => "$2y$10$8P2sLWqZf/qfWEoFKOhENugQSpwFxurctvBxCOqAAlkHx0iDwUuHC",
             'role' => 'superior',
             'position' => 'Manager'
         ]);
@@ -52,42 +60,42 @@ class DatabaseSeeder extends Seeder
             'name_vehicle' => 'Avanza 2023',
             'type_vehicle' => 'Mobil Angkutan Orang',
             'brand_vehicle' => 'Toyota',
-            'bbm_vehicle' => '12,6 km/liter'
+            'bbm_vehicle' => '12,6'
         ]);
 
         VehicleName::create([
             'name_vehicle' => 'Xpander 2023',
             'type_vehicle' => 'Mobil Angkutan Orang',
             'brand_vehicle' => 'Mitsubishi',
-            'bbm_vehicle' => '12,6 km/liter'
+            'bbm_vehicle' => '12,6'
         ]);
 
         VehicleName::create([
             'name_vehicle' => 'Elf 4WD',
             'type_vehicle' => 'Mobil Angkutan Orang',
             'brand_vehicle' => 'Mitsubishi',
-            'bbm_vehicle' => '12,6 km/liter'
+            'bbm_vehicle' => '12,6'
         ]);
 
         VehicleName::create([
             'name_vehicle' => 'Pickup L300',
             'type_vehicle' => 'Mobil Angkutan Barang',
             'brand_vehicle' => 'Toyota',
-            'bbm_vehicle' => '20,6 km/liter'
+            'bbm_vehicle' => '20,6'
         ]);
 
         VehicleName::create([
             'name_vehicle' => 'Hino 725C',
             'type_vehicle' => 'Mobil Angkutan Barang',
             'brand_vehicle' => 'Hino',
-            'bbm_vehicle' => '20,6 km/liter'
+            'bbm_vehicle' => '20,6'
         ]);
 
         VehicleName::create([
             'name_vehicle' => 'BMW COSTA 1',
             'type_vehicle' => 'Mobil Sewa',
             'brand_vehicle' => 'BMW',
-            'bbm_vehicle' => '12,6 km/liter'
+            'bbm_vehicle' => '12,6'
         ]);
 
         Vehicle::create([
@@ -133,16 +141,6 @@ class DatabaseSeeder extends Seeder
         Vehicle::create([
             'vehicle_name_id' => 3,
             'license_plate' => 'E 123 ABC',
-            'entry_date_vehicle' => '2024-05-16',
-            'service_date_vehicle' => '2024-06-16',
-            'service_month_vehicle' => 1,
-            'is_service' => false,
-            'status_vehicle' => 'available'
-        ]);
-
-        Vehicle::create([
-            'vehicle_name_id' => 3,
-            'license_plate' => 'F 123 ABC',
             'entry_date_vehicle' => '2024-05-16',
             'service_date_vehicle' => '2024-06-16',
             'service_month_vehicle' => 1,
@@ -244,26 +242,46 @@ class DatabaseSeeder extends Seeder
 
         UserVehicle::create([
             'karyawan_id' => 2,
-            'superior_id' => 3,
+            'superior_id' => 4,
             'vehicle_id' => 1,
             'start_date' => '2024-05-16',
             'end_date' => '2024-05-17',
             'status' => 'approved',
             'notes' => 'Pulang Kampung',
             'driver_id' => 1,
-
         ]);
 
         UserVehicle::create([
             'karyawan_id' => 3,
-            'superior_id' => 0,
+            'superior_id' => 4,
             'vehicle_id' => 2,
-            'start_date' => '2024-05-16',
-            'end_date' => '2024-05-17',
-            'status' => 'pending',
+            'start_date' => '2024-04-16',
+            'end_date' => '2024-04-17',
+            'status' => 'approved',
             'notes' => 'Pulang Kampung',
-            'driver_id' => 0,
+            'driver_id' => 2,
+        ]);
 
+        UserVehicle::create([
+            'karyawan_id' => 3,
+            'superior_id' => 4,
+            'vehicle_id' => 4,
+            'start_date' => '2024-03-16',
+            'end_date' => '2024-03-17',
+            'status' => 'approved',
+            'notes' => 'Pulang Kampung',
+            'driver_id' => 2,
+        ]);
+
+        UserVehicle::create([
+            'karyawan_id' => 3,
+            'superior_id' => 4,
+            'vehicle_id' => 5,
+            'start_date' => '2024-03-16',
+            'end_date' => '2024-03-17',
+            'status' => 'approved',
+            'notes' => 'Pulang Kampung',
+            'driver_id' => 3,
         ]);
     }
 }
