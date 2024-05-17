@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{id}', 'destroyVehicle')->name('destroyVehicle');
             Route::post('user/borrow/{id}', 'borrow')->name('borrow');
             Route::get('/history/{id}', 'history')->name('history');
+            Route::get('/export', 'exportVehiclesUser')->name('export');
         });
 
     Route::controller(ApprovalController::class)
